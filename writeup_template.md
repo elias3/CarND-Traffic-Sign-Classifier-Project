@@ -2,13 +2,12 @@
 
 ## Writeup
 
-### You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
-
 ---
 
 **Build a Traffic Sign Recognition Project**
 
 The goals / steps of this project are the following:
+
 * Load the data set (see below for links to the project data set)
 * Explore, summarize and visualize the data set
 * Design, train and test a model architecture
@@ -34,22 +33,20 @@ The goals / steps of this project are the following:
 ---
 ### Writeup / README
 
-#### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one. You can submit your writeup as markdown or pdf. You can use this template as a guide for writing the report. The submission includes the project code.
-
-You're reading it! and here is a link to my [project code](https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb)
+#### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.
 
 ### Data Set Summary & Exploration
 
 #### 1. Provide a basic summary of the data set. In the code, the analysis should be done using python, numpy and/or pandas methods rather than hardcoding results manually.
 
-I used the pandas library to calculate summary statistics of the traffic
+I used the collections library to calculate summary statistics of the traffic
 signs data set:
 
-* The size of training set is ?
-* The size of the validation set is ?
+* The size of training set is 34799
+* The size of the validation set is 4410
 * The size of test set is ?
-* The shape of a traffic sign image is ?
-* The number of unique classes/labels in the data set is ?
+* The shape of a traffic sign image is 32x32x3
+* The number of unique classes/labels in the data set is 43
 
 #### 2. Include an exploratory visualization of the dataset.
 
@@ -61,17 +58,25 @@ Here is an exploratory visualization of the data set. It is a bar chart showing 
 
 #### 1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
 
-As a first step, I decided to convert the images to grayscale because ...
+As a first step, I decided to convert the images to YUV and to take the Y channel. This method was used by Sermanet and LeCun, 2011, and proved to yield good results.
 
-Here is an example of a traffic sign image before and after grayscaling.
+Here is an example of a traffic sign image before and after taking the Y channel:
 
 ![alt text][image2]
 
-As a last step, I normalized the image data because ...
+Then I normalized the image and performed logarithmic corrections which helped to yield better training results. After this step I reapplied the normalization to ensure that the data that was acquired is normalized.
 
-I decided to generate additional data because ... 
+I decided to generate additional data because in two manners:
 
-To add more data to the the data set, I used the following techniques because ... 
+* Correct for the uneven distribution by generating images in every class to match the number of images in the highest represented class.
+* Generate from each class two more samples to aid training.
+
+For each time an image generation was required, I choose to do each of the following:
+
+* randomly shift the image in the range of [-2,2] pixels
+* Rotate the image in the ranenge of [-15,15] degrees
+* scale the image in the range of [0.9,1.1]
+* For 20% of the images add motion blur
 
 Here is an example of an original image and an augmented image:
 
