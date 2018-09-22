@@ -27,6 +27,12 @@ The goals / steps of this project are the following:
 [image7]: ./examples/placeholder.png "Traffic Sign 4"
 [image8]: ./examples/placeholder.png "Traffic Sign 5"
 
+[orig_gen]: ./images/orig_gen.png "Original vs. Generated"
+[y_chan]: ./images/y_channel.png "Original vs. Y channel"
+[hist_train]: ./images/histogram_train.png "Histogram Training"
+[hist_valid]: ./images/histogram_valid.png "Histogram Validation"
+[hist_test]: ./images/histogram_test.png "Histogram Test"
+
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
 
@@ -43,16 +49,19 @@ I used the collections library to calculate summary statistics of the traffic
 signs data set:
 
 * The size of training set is 34799
-* The size of the validation set is 4410
-* The size of test set is ?
+* The size of the validation set is 12630
+* The size of test set is 4410
 * The shape of a traffic sign image is 32x32x3
 * The number of unique classes/labels in the data set is 43
 
 #### 2. Include an exploratory visualization of the dataset.
 
-Here is an exploratory visualization of the data set. It is a bar chart showing how the data ...
+Here is an exploratory visualization of the data set. It is a bar chart showing a histogram of the training, validation and testing data sets.
 
-![alt text][image1]
+![alt text][hist_train]
+![alt text][hist_valid]
+![alt text][hist_test]
+
 
 ### Design and Test a Model Architecture
 
@@ -62,7 +71,7 @@ As a first step, I decided to convert the images to YUV and to take the Y channe
 
 Here is an example of a traffic sign image before and after taking the Y channel:
 
-![alt text][image2]
+![alt text][y_chan]
 
 Then I normalized the image and performed logarithmic corrections which helped to yield better training results. After this step I reapplied the normalization to ensure that the data that was acquired is normalized.
 
@@ -80,7 +89,7 @@ For each time an image generation was required, I choose to do each of the follo
 
 Here is an example of an original image and an augmented image:
 
-![alt text][image3]
+![alt text][orig_gen]
 
 The difference between the original data set and the augmented data set is the following ... 
 
