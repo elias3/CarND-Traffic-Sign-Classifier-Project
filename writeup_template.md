@@ -100,35 +100,51 @@ My final model consisted of the following layers:
 
 | Layer         		|     Description	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| Input         		| 32x32x3 RGB image   							| 
-| Convolution 3x3     	| 1x1 stride, same padding, outputs 32x32x64 	|
-| RELU					|												|
-| Max pooling	      	| 2x2 stride,  outputs 16x16x64 				|
-| Convolution 3x3	    | etc.      									|
-| Fully connected		| etc.        									|
-| Softmax				| etc.        									|
-|						|												|
-|						|												|
+| Input         		| 32x32x1 (Y layer normalized) image   							| 
+| Convolution (1) 5x5     	| 1x1 stride, same padding, outputs 28x28x12 	|
+| RELU					| Activation layer
+| Max pooling	      	| 2x2 stride,  outputs 14x14x12 |
+| Dropout	    (1)  	| keep_prob = 0.95 |
+| Convolution (2) 5x5     	| 1x1 stride, same padding, outputs 10x10x24 |
+| RELU					| Activation layer
+| Max pooling	      	| 2x2 stride,  outputs 5x5x12 |
+| Dropout	   (2)   	| keep_prob = 0.9 |
+| Fully connected (1)	| Concatenation of convolution (1) and dropout (2)  (size is 14x14x12 + 5x5x24 = 2952 , outputs= 600  |
+| Dropout	   (3)   	| keep_prob = 0.9 |
+| Fully connected (2)	| Concatenation of convolution (1) and dropout (2)  outpus = num_classes = 43 |
+| Softmax				| |      
  
 
 
 #### 3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
 
-To train the model, I used an ....
+To train the model, I used the following parameters:
+
+* The optimizer used is AdamOptimizer and minimizing the cross-entropy
+* Learning rate = 0.001
+* Number of epochs = 10
+* Batch size = 128
+
+I also experienced with different initializations of the weights, some layers were initialized with a truncated normal distribution weight of mu = 0, sigma = 0.1 and some with sigma = 0.2.
+Also, the weights where initilized to a constant of 0.1
 
 #### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
-My final model results were:
-* training set accuracy of ?
-* validation set accuracy of ? 
-* test set accuracy of ?
 
 If an iterative approach was chosen:
-* What was the first architecture that was tried and why was it chosen?
-* What were some problems with the initial architecture?
-* How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
-* Which parameters were tuned? How were they adjusted and why?
-* What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
+* I started with a simple LeNet network and tried to achieve a validation accuary of 0.93
+* In order to get this accuracy I had to generate 5 times the number of training samples that were provided.
+* Afterwards I added dropout layers and to the network and tried to change the number of filters in the convultions to get a better accuarcy.
+* The accuarcy achieved on the validation set was around 0.93
+* I tried to tune the hyperparameters, namely the dropout rates and also play around with generating samples with noisy samples.
+* Since this is a CNN network, a convoultion is our first choice. And drop-out layers help fight the overfitting problem.
+
+Afterwards I decided to take ideas from the work of Sermanet and LeCun, 2011. Their network took ideas from the LeNet model and extended it with techniques that better worked with the German Sign dataset.
+
+My final model results were:
+* training set accuracy of 0.94
+* validation set accuracy of ? 
+* test set accuracy of ?
 
 If a well known architecture was chosen:
 * What architecture was chosen?
