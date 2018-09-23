@@ -88,9 +88,9 @@ I decided to generate additional data because in two manners:
 
 For each time an image generation was required, I choose to do each of the following:
 
-* randomly shift the image in the range of [-2,2] pixels
+* Randomly shift the image in the range of [-2,2] pixels
 * Rotate the image in the ranenge of [-15,15] degrees
-* scale the image in the range of [0.9,1.1]
+* Scale the image in the range of [0.9,1.1]
 * For 20% of the images add motion blur
 
 Here is an example of an original image and an augmented image:
