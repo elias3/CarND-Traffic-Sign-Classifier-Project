@@ -18,20 +18,23 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/visualization.jpg "Visualization"
-[image2]: ./examples/grayscale.jpg "Grayscaling"
-[image3]: ./examples/random_noise.jpg "Random Noise"
-[image4]: ./examples/placeholder.png "Traffic Sign 1"
-[image5]: ./examples/placeholder.png "Traffic Sign 2"
-[image6]: ./examples/placeholder.png "Traffic Sign 3"
-[image7]: ./examples/placeholder.png "Traffic Sign 4"
-[image8]: ./examples/placeholder.png "Traffic Sign 5"
+
+[image1]: ./test_images/1.png "Traffic Sign 1"
+[image2]: ./test_images/2.png "Traffic Sign 2"
+[image3]: ./test_images/3.png "Traffic Sign 3"
+[image4]: ./test_images/4.png "Traffic Sign 4"
+[image5]: ./test_images/5.png "Traffic Sign 5"
+[image6]: ./test_images/6.png "Traffic Sign 6"
+[image7]: ./test_images/7.png "Traffic Sign 7"
+[image8]: ./test_images/8.png "Traffic Sign 8"
 
 [orig_gen]: ./images/orig_gen.png "Original vs. Generated"
 [y_chan]: ./images/y_channel.png "Original vs. Y channel"
 [hist_train]: ./images/histogram_train.png "Histogram Training"
 [hist_valid]: ./images/histogram_valid.png "Histogram Validation"
 [hist_test]: ./images/histogram_test.png "Histogram Test"
+[graph]: ./images/graph.png "Graph"
+[accuracy_entropy]: ./images/accuracy_entropy.png "accuracy cross/entropy"
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
@@ -104,14 +107,14 @@ My final model consisted of the following layers:
 | Convolution (1) 5x5     	| 1x1 stride, same padding, outputs 28x28x12 	|
 | RELU					| Activation layer
 | Max pooling	      	| 2x2 stride,  outputs 14x14x12 |
-| Dropout	    (1)  	| keep_prob = 0.95 |
+| Dropout	    (1)  	| keep_prob = 0.9 |
 | Convolution (2) 5x5     	| 1x1 stride, same padding, outputs 10x10x24 |
 | RELU					| Activation layer
 | Max pooling	      	| 2x2 stride,  outputs 5x5x12 |
 | Dropout	   (2)   	| keep_prob = 0.9 |
 | Fully connected (1)	| Concatenation of convolution (1) and dropout (2)  (size is 14x14x12 + 5x5x24 = 2952 , outputs= 600  |
-| Dropout	   (3)   	| keep_prob = 0.9 |
-| Fully connected (2)	| Concatenation of convolution (1) and dropout (2)  outpus = num_classes = 43 |
+| Dropout	   (3)   	| keep_prob = 0.7 |
+| Fully connected (2)	| input = 600, outpus = num_classes = 43 |
 | Softmax				| |      
  
 
@@ -130,8 +133,6 @@ Also, the weights where initilized to a constant of 0.1
 
 #### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
-
-If an iterative approach was chosen:
 * I started with a simple LeNet network and tried to achieve a validation accuary of 0.93
 * In order to get this accuracy I had to generate 5 times the number of training samples that were provided.
 * Afterwards I added dropout layers and to the network and tried to change the number of filters in the convultions to get a better accuarcy.
@@ -142,26 +143,45 @@ If an iterative approach was chosen:
 Afterwards I decided to take ideas from the work of Sermanet and LeCun, 2011. Their network took ideas from the LeNet model and extended it with techniques that better worked with the German Sign dataset.
 
 My final model results were:
-* training set accuracy of 0.94
-* validation set accuracy of ? 
-* test set accuracy of ?
 
-If a well known architecture was chosen:
-* What architecture was chosen?
-* Why did you believe it would be relevant to the traffic sign application?
-* How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
+* training set accuracy of 0.995
+* validation set accuracy of 0.933 
+* test set accuracy of 0.956
+
+Since the the accuracy of the training is ~100% it means that the training was successful. Also, the validation accuracy is higher than 93%, that means  that the model did learn. The test accuracy presents also a result which is close to the validation accuracy that means that the model didn't overfit/underfit.
  
+Moreover to confirm that the model did learn, I used TensorBoard and analyzed the different layers of the model. TensorBoard enables looking at the netowkr graph, thus helping to see if this matches the graph that was designed in the first place. Also it gives the oppurtunity to explore the evolution of weights and biases for every layer. To work with TensorBoard, I had to tag the different layers of the network with proper labels that can be seen in the code.
+
+The following is the network graph:
+
+![alt text][graph]
+
+An additional proof to the learning of the network is the development of the accuracy and the cross entropy throughout the training process:
+
+![alt text][accuracy_entropy]
 
 ### Test a Model on New Images
 
 #### 1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
 
-Here are five German traffic signs that I found on the web:
+Here are four German traffic signs that I found on the web:
 
-![alt text][image4] ![alt text][image5] ![alt text][image6] 
-![alt text][image7] ![alt text][image8]
+![alt text][image1] ![alt text][image2] ![alt text][image3] 
+![alt text][image4]
 
-The first image might be difficult to classify because ...
+And the following are ones that I photographed myself:
+
+![alt text][image5] ![alt text][image6] ![alt text][image7]  ![alt text][image8]
+ 
+The first image should be relatively easy to classify since it is in the center and similar tthe ones in the database.
+The second image might be difficult to recognize, since it is skewed.
+For the 3rd and 4th image, they should be recognizable easily.
+The 5th image is a bit skewed and has a hint of a different sign.
+The 6th image is cluttered and is a bit tricky to recognized.
+The 7th image is skewed and has bad lightning conditions but is still well visible.
+The 8th image is not part of the 43 classes so it is impossible to recognize.
+
+
 
 #### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
@@ -169,14 +189,17 @@ Here are the results of the prediction:
 
 | Image			        |     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| Stop Sign      		| Stop sign   									| 
-| U-turn     			| U-turn 										|
-| Yield					| Yield											|
-| 100 km/h	      		| Bumpy Road					 				|
-| Slippery Road			| Slippery Road      							|
+| End of no passing      		| End of no passing   									| 
+| Road work     			| Road work 										|
+| No passing for vehicles over 3.5 metric tons					| No passing for vehicles over 3.5 metric tons|
+| Stop Sign      		| Stop sign   | 
+| go straight or right	      		| go straight or right					 				|
+| Turn right ahead			| Turn right ahead      							|
+| General caution | General caution |
+| Speed limit (10km/h) | |
 
 
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
+The model was able to correctly guess 7 of the 8 traffic signs, but actually the 8th sign is not part of the database, so it could detect all 7 signs which gives an accuracy of 100%. This compares favorably to the accuracy on the test set of 96%
 
 #### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
