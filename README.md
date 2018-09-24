@@ -192,36 +192,103 @@ Here are the results of the prediction:
 
 | Image			        |     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| End of no passing      		| End of no passing   									| 
+| Speed limit (10km/h) |  Speed limit (120km/h) | 
 | Road work     			| Road work 										|
-| No passing for vehicles over 3.5 metric tons					| No passing for vehicles over 3.5 metric tons|
-| Stop Sign      		| Stop sign   | 
-| go straight or right	      		| go straight or right					 				|
-| Turn right ahead			| Turn right ahead      							|
+| No entry      		| No entry   | 
+| Go straight or right	      		| Go straight or right					 				|
 | General caution | General caution |
-| Speed limit (10km/h) | |
+| Turn right ahead			| Turn right ahead      							|
+| No passing for vehicles over 3.5 metric tons					| No passing for vehicles over 3.5 metric tons|
+| End of no passing      		| End of no passing   									| 
+
 
 
 The model was able to correctly guess 7 of the 8 traffic signs, but actually the 8th sign is not part of the database, so it could detect all 7 signs which gives an accuracy of 100%. This compares favorably to the accuracy on the test set of 96%
 
-#### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
+#### 3. Describe how certain the model is when predicting on each of the five (eight in my case) new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
 The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
 
-For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
+For the first image in the table (Speed limit 10), the model is not expected to find it but it finds another speed limit sign with a probability of 0.91
+
 
 | Probability         	|     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| .60         			| Stop sign   									| 
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
+| .91         			| Stop sign   									| 
+| .09270587     				| Stop 										|
+| .0010312509					| Speed limit (80km/h)											|
+| 2.308342e-08	      			| Speed limit (30km/h)					 				|
+| 3.6479603e-10				    | No passing for vehicles over 3.5 metric tons      							|
 
 
-For the second image ... 
+For the second image (No entry) the model is certain (prob ~1.0):
 
-### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
-#### 1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
+| Probability         	|     Prediction	        					| 
+|:---------------------:|:---------------------------------------------:| 
+| ~1.0         			| No entry   									| 
+| 3.138111e-12     				| Stop 										|
+| 2.8148827e-17					| Speed limit (70km/h)	|
+| 1.0882099e-20	      			| Speed limit (50km/h)					 				|
+| 3.8073007e-21				    | Keep left      							|
 
+
+For the third image (Go straight or right) the model is certain (prob ~1.0):
+
+| Probability         	|     Prediction	        					| 
+|:---------------------:|:---------------------------------------------:| 
+| ~1.0         			| Go straight or right   									| 
+| 6.0338618e-12     				| Turn left ahead 										|
+| 1.2098057e-12					| Ahead only	|
+| 2.0012496e-13	      			| Yield					 				|
+| 1.504922e-13				    | Stop      							|
+
+For the fourth image (General caution) the model is certain (prob 0.9998):
+
+| Probability         	|     Prediction	        					| 
+|:---------------------:|:---------------------------------------------:| 
+| 0.9998421         			| General caution   									| 
+| 0.00015788696     				| Traffic signals 										|
+| 2.0872193e-13					| Beware of ice/snow	|
+| 5.8850363e-15	      			| Road work					 				|
+| 4.7195316e-15				    | Go straight or left      							|
+
+For the fifth image (Turn right ahead) the model is certain (prob 0.9999999):
+
+| Probability         	|     Prediction	        					| 
+|:---------------------:|:---------------------------------------------:| 
+| 0.9999999         			| Turn right ahead   									| 
+| 6.465239e-08     				| Stop 										|
+| 1.1796081e-08					| Roundabout mandatory	|
+| 8.794377e-09	      			| Speed limit (30km/h)					 				|
+| 7.976371e-09				    | Keep right      							|
+
+For the sixth image (Road work) the model is certain (prob 0.9999997):
+
+| Probability         	|     Prediction	        					| 
+|:---------------------:|:---------------------------------------------:| 
+| 0.9999999         			| Road work   									| 
+| 2.6661783e-07     				| Bumpy road 										|
+| 6.684351e-12					| Slippery road	|
+| 5.431725e-13	      			| Dangerous curve to the left					 				|
+| 8.274279e-14				    | Dangerous curve to the right      							|
+
+For the seventh image (No passing for vehicles over 3.5 metric tons) the model is certain (prob 0.9740399):
+
+| Probability         	|     Prediction	        					| 
+|:---------------------:|:---------------------------------------------:| 
+| 0.9740399         			| No passing for vehicles over 3.5 metric tons   									| 
+| 0.016285053     				| No passing 										|
+| 0.005387763					| Vehicles over 3.5 metric tons prohibited	|
+| 0.003632858	      			| Speed limit (80km/h)					 				|
+| 0.0006257569				    | End of no passing by vehicles over 3.5 metric tons      							|
+
+For the eighth image (End of no passing) the model is certain (prob ~1.0):
+
+| Probability         	|     Prediction	        					| 
+|:---------------------:|:---------------------------------------------:| 
+| ~1.0         			| End of no passing   									| 
+| 3.5522444e-12     				| No passing 										|
+| 1.4380163e-14					| Dangerous curve to the right	|
+| 1.3416598e-20	      			| Slippery road					 				|
+| 4.582968e-21				    | No passing for vehicles over 3.5 metric tons      							|
 
